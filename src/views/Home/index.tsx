@@ -1,78 +1,96 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import HeroSection from './components/HeroSection';
 import HomeFAQs from './components/HomeFAQ';
 import ContactForm from './components/ContactForm';
+import ClaimLandingSection from './components/ClaimLandingSection';
 import MainFooter from './components/MainFooter';
 import InfoSection from './components/InfoSection';
 import FeaturesGrid from './components/FeaturesGrid';
 
 const Home: React.FC = () => {
-	const contactRef = useRef(null);
-	const aboutRef = useRef(null);
-	const FqRef = useRef(null);
-	const scrollToSection = (ref) => {
-		ref.current.scrollIntoView({ behavior: 'smooth' });
+	const [menuOpen, setMenuOpen] = useState(false);
+	const contactRef = useRef<HTMLDivElement>(null);
+	const aboutRef = useRef<HTMLDivElement>(null);
+	const featuresRef = useRef<HTMLDivElement>(null);
+	const scrollToSection = (ref: React.RefObject<HTMLElement>) => {
+		if (ref.current) {
+			ref.current.scrollIntoView({ behavior: 'smooth' });
+		}
 	};
 
-	useEffect(() => {
-		let lastScrollTop = 0; // Initialize lastScrollTop variable
 
+	useEffect(() => {
+		let lastScrollTop = 0;
 		const handleScroll = () => {
 			const hcf = document.querySelector(".hcf-profile");
-			const scrollTop =
-				document.documentElement.scrollTop || document.body.scrollTop;
+			const scrollTop = window.scrollY;
 
-			if (scrollTop > lastScrollTop) {
-				if (hcf) {
+			if (hcf) {
+				if (scrollTop > lastScrollTop) {
 					hcf.classList.add("hcf-profile-fixed");
-				}
-			} else if (scrollTop < lastScrollTop) {
-				if (hcf) {
+				} else {
 					hcf.classList.remove("hcf-profile-fixed");
 				}
 			}
-
 			lastScrollTop = scrollTop;
 		};
 
-
-		// Add scroll event listener
 		window.addEventListener("scroll", handleScroll);
-
-		// Cleanup the event listener on unmount
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
+		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
+
 	return (
 		<>
-			<div>
-				<div className="">
+			<div className="flex flex-col">
+				{/* Hero Section */}
+				<section >
 					<HeroSection
 						scrollToSection={scrollToSection}
-						featuresRef={FqRef}
+						featuresRef={featuresRef}
 						contactRef={contactRef}
 						aboutRef={aboutRef}
 					/>
-					{/* <div className='bg-white'>
-						<ClaimLandingSection />
-					</div> */}
-					<div className='!bg-[#eff6ff] relative'>
+				</section>
+
+				{/* Claim / Secondary Hero */}
+				<section className="bg-blue-50 py-16">
+					<ClaimLandingSection />
+				</section>
+
+				{/* Features */}
+				<section className="bg-blue-50 py-20" ref={featuresRef}>
+					<div className="container mx-auto px-4">
 						<FeaturesGrid />
 					</div>
-					<div className='!bg-white relative' ref={aboutRef}>
+				</section>
+
+				{/* About / Info */}
+				<section className="bg-white py-20" ref={aboutRef}>
+					<div className="container mx-auto px-4">
 						<InfoSection />
 					</div>
-					<div className='relative bg-white' ref={FqRef}>
+				</section>
+
+				{/* FAQs */}
+				<section className="bg-blue-50 py-20">
+					<div className="container mx-auto px-4">
 						<HomeFAQs />
 					</div>
-					<div className='bg-white relative' ref={contactRef}>
+				</section>
+
+				{/* Contact Form */}
+				<section className="bg-blue-50 py-20" ref={contactRef}>
+					<div className="container mx-auto px-4">
 						<ContactForm />
 					</div>
-					{/* <div className='bg-white'>
+				</section>
+
+				{/* Footer */}
+				<footer className="bg-footer">
+					<div className="container mx-auto px-4">
 						<MainFooter />
-					</div> */}
-				</div>
+					</div>
+				</footer>
 			</div>
 		</>
 	);

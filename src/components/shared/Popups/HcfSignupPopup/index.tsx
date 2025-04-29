@@ -75,7 +75,7 @@ const HcfSignupPopup = ({
 
     const [email, setEmail] = useState('')
 
-    const handleEmailSignUp = async (e) => {
+    const handleEmailSignUp = async (e: any) => {
         e.preventDefault()
         setLoading(true)
         try {
@@ -99,7 +99,7 @@ const HcfSignupPopup = ({
     }
 
     return (
-        <div className={`${className} w-full sm:w-auto`}>
+        <div className={`${className} w-full sm:w-auto mt-10`}>
             {buttonChildren && (
                 <span
                     className={`${className} w-full sm:w-auto`}
@@ -200,9 +200,9 @@ const HcfSignupPopup = ({
                                         </p>
                                     </div>
                                 ) : (
-                                    <div className='w-[90%] mx-auto flex flex-col gap-y-[10px] pb-3' >
+                                    <div className='w-[90%] mx-auto flex flex-col gap-y-[10px] pb-3 p-[44px 76px]' >
                                         <Button
-                                            className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-medium rounded-[5px]"
+                                            className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-medium rounded-[5px] "
                                             variant="solid"
                                             onClick={() => {
                                                 localStorage.setItem('storeType', 'hcf')

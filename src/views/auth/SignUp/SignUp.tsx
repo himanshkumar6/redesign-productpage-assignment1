@@ -20,7 +20,7 @@ export const SignUpBase = ({
 
     return (
         <>
-            <div className="mb-8">
+            <div className="mb-8 z-0">
                 <Logo type="streamline" mode={mode} imgClass="mx-auto" logoWidth={60} />
             </div>
             <div className="mb-8">

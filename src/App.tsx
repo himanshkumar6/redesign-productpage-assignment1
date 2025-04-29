@@ -2,7 +2,7 @@ import { BrowserRouter } from 'react-router-dom'
 import Theme from '@/components/template/Theme'
 import Layout from '@/components/layouts'
 import { AuthProvider } from '@/auth'
-import Views from '@/views'
+import Home from '@/views/Home/index'
 import appConfig from './configs/app.config'
 import './locales'
 
@@ -16,7 +16,7 @@ function App() {
             <BrowserRouter>
                 <AuthProvider>
                     <Layout>
-                        <Views />
+                        <Home />
                     </Layout>
                 </AuthProvider>
             </BrowserRouter>

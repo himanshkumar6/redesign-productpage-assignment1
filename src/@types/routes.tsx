@@ -16,12 +16,13 @@ export interface Meta {
     layout?: LayoutType
 }
 
-export type Route = {
+export type Route<T = {}> = {
     key: string
     path: string
-    component: LazyExoticComponent<<T extends Meta>(props: T) => JSX.Element>
+    component: LazyExoticComponent<React.ComponentType<T>>;
     authority: string[]
     meta?: Meta
+    isProtected?: boolean;
 }
 
 export type Routes = Route[]

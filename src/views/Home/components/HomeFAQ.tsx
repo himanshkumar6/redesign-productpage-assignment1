@@ -3,7 +3,7 @@ import { BiChevronDown } from 'react-icons/bi';
 
 const FAQItem = ({ question, answer, isOpen, onClick }) => (
     <div className="border-b border-indigo-100">
-		<button
+        <button
             onClick={onClick}
             className="w-full py-2 px-0 md:px-4 flex items-center justify-between text-left transition-colors hover:bg-indigo-50/50 rounded-lg"
         >
@@ -86,7 +86,7 @@ const FAQ = () => {
                 </div>
 
                 {/* FAQ Items */}
-                <div className="space-y-2 bg-white rounded-2xl shadow-xl p-6">
+                <div className="space-y-2 bg-blue-50 rounded-2xl shadow-xl p-6">
                     {faqData.map((faq, index) => (
                         <FAQItem
                             key={index}

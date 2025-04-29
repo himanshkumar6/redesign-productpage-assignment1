@@ -15,7 +15,7 @@ import type {
 
 export interface ButtonProps
     extends CommonProps,
-        Omit<ComponentPropsWithRef<'button'>, 'onClick'> {
+    Omit<ComponentPropsWithRef<'button'>, 'onClick'> {
     asElement?: ElementType
     active?: boolean
     block?: boolean
@@ -69,7 +69,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     const formControlSize = useForm()?.size
     const inputGroupSize = useInputGroup()?.size
     const defaultClass = 'button'
-    const sizeIconClass = 'inline-flex items-center justify-center'
+    const sizeIconClass = 'inline-flex items-center justify-center w-auto'
 
     const buttonSize = size || inputGroupSize || formControlSize || controlSize
     const feedback = !ui?.button?.disableClickFeedback || clickFeedback
@@ -84,7 +84,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
                     radiusShape[shape],
                     icon && !children
                         ? `${CONTROL_SIZES.lg.w} ${sizeIconClass} text-2xl`
-                        : 'px-8 py-2 text-base',
+                        : 'px-8 py-2 text-base z-0',
                 )
                 break
             case SIZES.SM:
@@ -162,9 +162,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
         activeColor,
         textColor,
     }: ButtonColor) => {
-        return `${bgColor} ${
-            unclickable ? disabledClass : hoverColor + ' ' + activeColor
-        } ${textColor}`
+        return `${bgColor} ${unclickable ? disabledClass : hoverColor + ' ' + activeColor
+            } ${textColor}`
     }
 
     const btnColor = () => {

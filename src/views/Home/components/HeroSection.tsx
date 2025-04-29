@@ -1,7 +1,8 @@
-import smallBG from '@/assets/images/main-bg-small.png';
-import { Button } from '@/components/ui';
+import { motion } from 'framer-motion';
 import HomeNavbar from '@/components/shared/HomeNav';
-import HcfSignupPopup from '@/components/shared/Popups/HcfSignupPopup';
+import HcfSignupPopup from '../../../components/shared/Popups/HcfSignupPopup';
+import { Button } from '@/components/ui';
+import { string } from 'zod';
 
 interface HeroSectionProps {
     scrollToSection: (ref: React.RefObject<HTMLElement>) => void;
@@ -16,10 +17,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     contactRef,
     aboutRef,
 }) => {
-
-
     return (
-        <div className="!bg-[#01052f] w-full relative flex flex-col py-2 md:py-5 overflow-hidden">
+        <div className="relative text-white py-8 px-6 md:px-20 pt-32 min-h-screen overflow-hidden bottom-5">
+            {/* Navbar */}
             <HomeNavbar
                 scrollToSection={scrollToSection}
                 featuresRef={featuresRef}
@@ -27,96 +27,71 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 aboutRef={aboutRef}
             />
 
-            <div className='min-h-[90vh] flex items-center'>
-                {/* Background video for larger screens */}
-                {/* <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="hidden md:block absolute top-0 left-0 min-w-full min-h-full object-cover z-[-10]"
-                >
-                    <source src={bgVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video> */}
-
-                {/* Background image for mobile */}
-                <img
-                    src={smallBG}
-                    alt="background_image"
-                    className="md:hidden h-full w-full object-cover absolute top-0 left-0 z-[-10]"
+            {/* Blurred Animated Background Bubbles */}
+            <div className="absolute inset-0 -z-10 pointer-events-none">
+                <motion.div
+                    animate={{ y: [0, -30, 0], x: [0, 30, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-10 left-10 w-40 h-40 bg-purple-500 opacity-60 rounded-full blur-2xl"
                 />
-
-                {/* Overlay to ensure text readability */}
-                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-[-5]"></div>
-
-                <div className="relative z-10 text-white w-full flex flex-col lg:flex-row-reverse md:mt-6 lg:mt-0 lg:items-center lg:justify-between px-4 max-w-[1538px] mx-auto">
-                    {/* Video Section */}
-                    <div className="lg:w-5/12 mt-8 lg:mt-0 lg:mb-0 mb-6">
-                        {/* <div className="relative overflow-hidden pt-[56.25%] rounded-lg shadow-lg">
-                            <iframe
-                                src={`https://www.youtube.com/embed/xQl8i2sO_Ls?autoplay=1&mute=${isMuted ? 1 : 0
-                                    }&loop=1&playlist=xQl8i2sO_Ls&controls=0&showinfo=0&rel=0`}
-                                title="Product Demo Video"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                className="absolute top-0 left-0 w-full h-full"
-                            ></iframe>
-                            <button
-                                onClick={toggleMute}
-                                className="absolute bottom-4 right-4 bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-all"
-                            >
-                                {isMuted ? (
-                                    <IoVolumeMuteOutline size={24} />
-                                ) : (
-                                    <IoVolumeHighOutline size={24} />
-                                )}
-                            </button>
-                        </div> */}
-                    </div>
-
-                    {/* Content Section */}
-                    <div className="lg:w-1/2 lg:pr-8">
-                        <h1 className="text-2xl md:text-4xl font-semibold mb-4 capitalize text-white">
-                            <span className="text-primary">AI front office </span> <br />
-                            for healthcare agents
-                        </h1>
-                        <p style={{ lineHeight: '0.7' }} className="text-lg my-8 font-light">
-                            Create <span className="text-primary font-bold">AI Store</span>  in 2 min <br />
-                            <br />
-                            Scale with{' '}
-                            <span className="font-bold text-primary">
-                                Digital Marketing
-                            </span>{' '}
-                        </p>
-                        <div>
-                            <HcfSignupPopup popupButtonStatus buttonChildren={<Button block variant='solid' className='rounded-[5px] max-w-[200px]'>Get Started</Button>} />
-                        </div>
-                        <div className="text-white flex gap-12 mt-8 flex-wrap">
-                            <div>
-                                <h1 className="text-3xl font-bold text-white">
-                                    2100<span className="text-primary ml-1">+</span>
-                                </h1>
-                                <p className="text-lg capitalize">qualified doctors</p>
-                            </div>
-                            <div>
-                                <h1 className="text-3xl font-bold text-white">
-                                    1000<span className="text-primary ml-1">+</span>
-                                </h1>
-                                <p className="text-lg capitalize">hospitals</p>
-                            </div>
-                            <div>
-                                <h1 className="text-3xl font-bold text-white">
-                                    800<span className="text-primary ml-1">+</span>
-                                </h1>
-                                <p className="text-lg capitalize">Treatment Plans</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <motion.div
+                    animate={{ y: [0, -30, 0], x: [0, 80, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute bottom-20 right-20 w-60 h-60 bg-blue-500 opacity-50 rounded-full blur-2xl"
+                />
+                <motion.div
+                    animate={{ y: [0, -40, 0], x: [0, 40, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-1/3 right-1/2 w-32 h-32 bg-pink-400 opacity-50 rounded-full blur-2xl"
+                />
+                <motion.div
+                    animate={{ y: [0, -40, 0], x: [0, 40, 0] }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute bottom-1/4 left-1/3 w-48 h-48 bg-teal-400 opacity-40 rounded-full blur-3xl"
+                />
             </div>
 
+            {/* Hero Main Content */}
+            <div className="text-center space-y-6 my-20 z-10 relative">
+                <h1 className="text-4xl md:text-6xl font-bold text-blue-600">AI Front Office</h1>
+                <h2 className="text-3xl md:text-5xl font-extrabold text-blue-800">For Healthcare Agents</h2>
+
+                <p className="text-lg md:text-xl text-blue-600 mt-4">
+                    Create <span className="font-semibold">AI Store</span> in 2 min<br />
+                    Scale with <span className="text-blue-800 font-semibold">Digital Marketing</span>
+                </p>
+
+                <HcfSignupPopup
+                    popupButtonStatus
+                    buttonChildren={
+                        <Button
+                            size="md"
+                            variant="solid"
+                            className="rounded-[10px] mt-6 px-8 py-3 bg-purple-500 hover:bg-purple-600 transition font-semibold shadow-md"
+                        >
+                            Get Started
+                        </Button>
+
+                    }
+                    hcfLogin={true}
+                />
+            </div>
+
+            {/* Stats Section */}
+            <div className="flex flex-col md:flex-row justify-center gap-10 mt-10 text-blue-600 z-10 relative">
+                {[
+                    { title: "2100+", label: "Qualified Doctors" },
+                    { title: "1000+", label: "Hospitals" },
+                    { title: "800+", label: "Treatment Plans" }
+                ].map((item, index) => (
+                    <div key={index} className="flex flex-col items-center">
+                        <h3 className="text-3xl md:text-4xl font-bold">
+                            {item.title.split("+")[0]}<span className="text-purple-400">+</span>
+                        </h3>
+                        <p className="text-lg mt-2">{item.label}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

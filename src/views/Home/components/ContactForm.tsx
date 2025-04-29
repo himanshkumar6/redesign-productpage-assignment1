@@ -1,9 +1,11 @@
 import { Button, Notification, toast } from '@/components/ui';
 import { useState } from 'react';
-import { BiPhone, BiSend, BiUser } from 'react-icons/bi';
+import { BiMessageSquare, BiPhone, BiSend, BiUser } from 'react-icons/bi';
 import { BsLinkedin, BsTwitter } from 'react-icons/bs';
 import { CgMail } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
+import { AxiosError } from 'axios';
+
 
 const ContactForm = () => {
     const [formState, setFormState] = useState<{
@@ -21,40 +23,31 @@ const ContactForm = () => {
 
     const [focused, setFocused] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            setIsSubmitting(true)
+            setIsSubmitting(true);
             // await apiContactUs(formState)
-            setIsSubmitting(false)
+            setIsSubmitting(false);
             toast.push(
-                <Notification
-                    title={'Success'}
-                    type={'success'}
-                >
+                <Notification title="Success" type="success">
                     Successfully submitted
-                </Notification>,
-            )
-            setFormState({
-                fullname: '',
-                email: '',
-                subject: '',
-                message: ''
-            })
-        } catch (err) {
-            setIsSubmitting(false)
+                </Notification>
+            );
+            setFormState({ fullname: '', email: '', subject: '', message: '' });
+        } catch (error) {
+            const err = error as AxiosError<{ message: string }>;
+            setIsSubmitting(false);
             toast.push(
-                <Notification
-                    title={err?.response?.data.message}
-                    type={'danger'}
-                >
-                    {err?.response?.data.message}
-                </Notification>,
-            )
+                <Notification title={err.response?.data.message} type="danger">
+                    {err.response?.data.message}
+                </Notification>
+            );
         }
     };
 
-    const handleChange = (e) => {
+
+    const handleChange = (e: { target: { name: any; value: any; }; }) => {
         setFormState({
             ...formState,
             [e.target.name]: e.target.value
@@ -62,7 +55,7 @@ const ContactForm = () => {
     };
 
     return (
-        <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="bg-blue-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {/* Left Column - Contact Info */}
@@ -131,7 +124,7 @@ const ContactForm = () => {
                                     onChange={handleChange}
                                     onFocus={() => setFocused('fullname')}
                                     onBlur={() => setFocused('')}
-                                    className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg transition-all"
                                     required
                                 />
                             </div>
@@ -149,12 +142,12 @@ const ContactForm = () => {
                                     onChange={handleChange}
                                     onFocus={() => setFocused('email')}
                                     onBlur={() => setFocused('')}
-                                    className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg transition-all"
                                     required
                                 />
                             </div>
 
-                            {/* <div className="relative">
+                            <div className="relative">
                                 <div className={`absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-300 ${focused === 'subject' || formState.subject ? 'text-primary' : 'text-gray-400'
                                     }`}>
                                     <BiMessageSquare className="w-5 h-5" />
@@ -167,10 +160,10 @@ const ContactForm = () => {
                                     onChange={handleChange}
                                     onFocus={() => setFocused('subject')}
                                     onBlur={() => setFocused('')}
-                                    className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg transition-all"
                                     required
                                 />
-                            </div> */}
+                            </div>
 
                             <div className="relative">
                                 <textarea
@@ -181,7 +174,7 @@ const ContactForm = () => {
                                     onFocus={() => setFocused('message')}
                                     onBlur={() => setFocused('')}
                                     rows={4}
-                                    className="w-full p-4 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+                                    className="w-full p-4 bg-white border border-gray-200 rounded-lg  transition-all"
                                     required
                                 />
                             </div>

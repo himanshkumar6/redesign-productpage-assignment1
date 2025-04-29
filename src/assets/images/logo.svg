@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" width="1200" height="200">
+  <!-- Black Circle -->
+  <circle cx="80" cy="200" r="60" fill="black" />
+  
+  <!-- Centered G inside circle -->
+  <text x="80" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="70" fill="white" dominant-baseline="middle">G</text>
+
+  <!-- go text -->
+  <text x="155" y="210" font-family="Arial, sans-serif" font-size="60" fill="black">go</text>
+
+  <!-- Getwell.ai together -->
+  <text x="230" y="210" font-family="Arial, sans-serif" font-size="60">
+    <tspan fill="#00c8ff">Getwell</tspan>
+    <tspan fill="#001f3f">.ai</tspan>
+  </text>
+</svg>

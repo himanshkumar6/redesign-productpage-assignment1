@@ -3,10 +3,10 @@ import classNames from 'classnames'
 import CloseButton from '../CloseButton'
 import { motion } from 'framer-motion'
 import useWindowSize from '../hooks/useWindowSize'
-import type ReactModal from 'react-modal'
+import type { Props as ReactModalProps } from 'react-modal'
 import type { MouseEvent } from 'react'
 
-export interface DialogProps extends ReactModal.Props {
+export interface DialogProps extends ReactModalProps {
     closable?: boolean
     contentClassName?: string
     height?: string | number
@@ -29,7 +29,7 @@ const Dialog = (props: DialogProps) => {
         onClose,
         overlayClassName,
         portalClassName,
-        style,
+        style = {}, // Default fallback to avoid undefined spread
         width = 520,
         ...rest
     } = props
@@ -49,7 +49,16 @@ const Dialog = (props: DialogProps) => {
     const contentStyle = {
         content: {
             inset: 'unset',
-        },
+            margin: 'auto',
+            borderRadius: '8px',
+            overflow: 'auto',
+            padding: '20px',
+            background: 'transparent',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+        } as React.CSSProperties,
         ...style,
     }
 
@@ -75,12 +84,15 @@ const Dialog = (props: DialogProps) => {
     return (
         <Modal
             className={{
-                base: classNames('dialog', className as string),
+                base: classNames('dialog', className),
                 afterOpen: 'dialog-after-open',
                 beforeClose: 'dialog-before-close',
             }}
             overlayClassName={{
-                base: classNames('dialog-overlay', overlayClassName as string),
+                base: classNames(
+                    'fixed inset-0 flex items-center justify-center bg-black/50 z-[1000]',
+                    overlayClassName
+                ),
                 afterOpen: 'dialog-overlay-after-open',
                 beforeClose: 'dialog-overlay-before-close',
             }}
@@ -88,12 +100,13 @@ const Dialog = (props: DialogProps) => {
             bodyOpenClassName={classNames('dialog-open', bodyOpenClassName)}
             ariaHideApp={false}
             isOpen={isOpen}
-            style={{ ...contentStyle }}
+            style={contentStyle}
             closeTimeoutMS={closeTimeoutMS}
             {...rest}
         >
             <motion.div
                 className={dialogClass}
+                style={{ padding: '44px 71px' }}
                 initial={{ transform: 'scale(0.9)' }}
                 animate={{
                     transform: isOpen ? 'scale(1)' : 'scale(0.9)',
